@@ -1,8 +1,7 @@
-name: Deploy static site to GitHub Pages
+name: Deploy DogWalk Maroc to GitHub Pages
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
@@ -18,14 +17,16 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup GitHub Pages
+      - name: Enable and configure GitHub Pages
         uses: actions/configure-pages@v5
-      - name: Upload website
+        with:
+          enablement: true
+      - name: Upload website artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
-      - name: Deploy to GitHub Pages
+      - name: Deploy to Pages
         id: deployment
         uses: actions/deploy-pages@v4
