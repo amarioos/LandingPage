@@ -17,16 +17,22 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Enable and configure GitHub Pages
-        uses: actions/configure-pages@v5
+      - uses: actions/checkout@v4
+      - name: Prepare public files only
+        run: |
+          mkdir -p _site/assets _site/admin
+          cp index.html _site/index.html
+          cp assets/product.webp assets/reference.webp _site/assets/
+          cp admin/index.html _site/admin/index.html
+          touch _site/.nojekyll
+          test -s _site/assets/product.webp
+          test -s _site/assets/reference.webp
+      - uses: actions/configure-pages@v5
         with:
           enablement: true
-      - name: Upload website artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - name: Deploy to Pages
         id: deployment
         uses: actions/deploy-pages@v4

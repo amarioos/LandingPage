@@ -1,0 +1,1 @@
+export const defaults = {product:'DogWalk Maroc — قرعة 3 فـ 1',price:null as number|null,tax:null as number|null,currency:'MAD',analytics:true,notes:true,images:[] as {url:string,label:string,x:number,y:number,width:number,height:number}[]};
